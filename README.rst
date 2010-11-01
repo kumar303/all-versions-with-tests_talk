@@ -16,21 +16,25 @@ so that our vast ecosystem of third party libraries will live on in the world
 of Python 3.
 
 - count of PyPI packages
+
   - percentage that support Python 3
   - percentage that support Jython
 
 - how to support all versions all the time (overview)
+
   - brief intro to automated tests
   - using tox
   - using tox + Hudson for CI
 
 - automated testing tools
+
   - nosetests
   - py.test
   - unittest2
   - plugins
 
 - using tox
+
   - http://codespeak.net/tox/
   - demo
   - explanation of tox.ini
@@ -40,15 +44,18 @@ of Python 3.
   - virtualenv
 
 - a test suite for Python 2 and 3
+
   - explanation of 2to3
   - tox recipe
 
 - integrating tox into Hudson
+
   - brief intro to Hudson
   - using the matrix build with $TOXENV
   - e.g. http://hudson.testrun.org/job/nose-unstable/
 
 - congratulations
+
   - you now know how to maintain a module in all major versions of Python using...
     - a test runner
     - tox
