@@ -1,19 +1,19 @@
-===================================================================
-Supporting All Versions of Python All The Time With Automated Tests
-===================================================================
+=======================================================
+Supporting All Versions of Python All The Time With Tox
+=======================================================
 
 If you maintain a module that targets multiple environments then this talk
-will explain the modern tools and techniques needed to ensure your module
-works in all versions of Python. If you're new to testing, you'll get a brief
-intro to nosetests, py.test, and unittest[2] so you can start building an
-automated test suite. If you already have a test suite, you'll find out how to
-leverage the tox command line tool and continuous integration (CI) to make
-sure every code change executes tests in all versions of Python, including 2.4
-through 2.7, Jython, and 3.x. As for Python 3, this talk will present a
-succinct build / test strategy for maintaining a module in both 2.x and 3.x.
-Ultimately, this talk aims to bridge the gap between Python 2 and 3 so that
-our vast ecosystem of third party libraries will live on in the world of
-Python 3.
+will explain the modern tools and techniques needed to ensure that your module
+works in all versions of Python. You probably already have a massive test
+suite using a tool like nosetests, py.test, hand rolled unittest, or something
+completely custom. Why not plug your test suite into tox, a command line
+program, and set up some continuous integration (CI) to make sure every code
+change executes tests in all versions of Python, including 2.4 through 2.7,
+Jython, and 3.x? As part of showing you how this works, the presenter will
+provide a succinct build / test strategy for maintaining a module in both 2.x
+and 3.x. Ultimately, this talk aims to bridge the gap between Python 2 and 3
+so that our vast ecosystem of third party libraries will live on in the world
+of Python 3.
 
 - count of PyPI packages
   - percentage that support Python 3
