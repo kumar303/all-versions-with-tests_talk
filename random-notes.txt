@@ -1,0 +1,10 @@
+This is why you may not want to try and support multiple versions:
+
+======================================================================
+ERROR: fudge.tests.test_patcher.test_patch_builtin_as_string
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  ...
+  File "/usr/local/Cellar/jython/2.5.1/libexec/Lib/datetime.py", line 1687, in __eq__
+    if isinstance(other, datetime):
+TypeError: isinstance() arg 2 must be a class, type, or tuple of classes and types
