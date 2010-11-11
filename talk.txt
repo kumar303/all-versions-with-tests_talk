@@ -1,0 +1,159 @@
+
+=======================================================
+Supporting All Versions of Python All The Time With Tox
+=======================================================
+
+:Author: Kumar McMillan
+:Venue: ChiPy
+
+The Python Package Index
+========================
+
+http://pypi.python.org/pypi
+
+.. class:: incremental
+
+  - 11,977 packages
+  - Ready for Python 3?
+  
+    - 240
+    - Programming Language :: Python :: 3
+  
+  - Most wanted?
+  - Django
+
+Package Development
+===================
+
+- requirements
+- dev environment
+- tests
+  
+  - test requirements
+
+Tox
+===
+
+http://codespeak.net/tox/
+
+Automates a multi-version testing environment
+
+.. class:: incremental
+  
+  - manages each virtualenv
+  - manages requirements
+  - executes test commands
+  - customizable in tox.ini
+
+Tox
+===
+
+[demo]
+
+Developing Nose
+===============
+
+.. code-block:: bash
+  
+  pip install nose
+
+- 27,372 downloads
+- uses coverage (optional)
+
+.. code-block:: bash
+  
+    $ python selftest.py        
+    .................................................................................................................S.................................................................................................................................................................................................SS.....................
+    ----------------------------------------------------------------------
+    Ran 330 tests in 3.985s
+    
+    OK (SKIP=3)
+
+Nose In The Wild
+================
+
+- Python 2.3 (meh)
+- Python 2.4
+- Python 2.5
+- Python 2.6
+- Python 2.7
+- Jython
+- Python 3.0 (why not?)
+
+Nose, The Old Way
+=================
+
+.. code-block:: bash
+
+    $ python2.4 selftest.py
+    $ python2.5 selftest.py
+    $ python2.6 selftest.py
+
+Tox, the new way!
+=================
+
+[results]
+
+tox.ini config
+==============
+
+- the test virtualenvs
+- virtualenv overrides
+- dependencies to install
+- commands to run
+- tox --showconfig
+
+Supporting Python 3
+===================
+
+- Develop in Python 2
+- Build for Python 3
+- tox has Python 3 magic
+
+Supporting Python 3: setup.py
+=============================
+
+.. code-block:: python
+
+  kw = {}
+  if sys.version_info >= (3,):
+      kw['use_2to3'] = True
+
+  setup(name='foo',
+        version='0.1,
+        description='...',
+        **kw)
+
+Supporting Python 3
+===================
+
+.. code-block:: bash
+  
+  python3 setup.py build_tests
+  # adjust path for built tests...
+  python3 run_tests.py
+
+Examples
+========
+
+- nosetests, py.test
+- building docs w/ sphinx
+- custom test runner
+
+Using tox in Hudson
+===================
+
+- $TOXENV with Matrix build
+- [view recipe]
+
+Hudson Bootstrapping
+====================
+
+.. code-block:: python
+    
+    # install tox on any slave:
+    url = "https://pytox.googlecode.com/hg/toxbootstrap.py"
+    os.environ['USETOXDEV']="1"  # use tox dev version until 0.9
+    d = dict(__file__='toxbootstrap.py')
+    exec urllib.urlopen(url).read() in d
+    d['cmdline'](['--recreate'])
