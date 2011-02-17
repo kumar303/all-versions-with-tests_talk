@@ -4,7 +4,22 @@ Supporting All Versions of Python All The Time With Tox
 =======================================================
 
 :Author: Kumar McMillan
-:Venue: ChiPy
+:Venue: PyCon 2011
+
+Packages
+========
+
+- We build packages
+- We share packages
+
+  - github
+  - PyPI
+
+- Fabric of our community
+
+.. class:: handout
+
+  There are many people in this room who have created packages that I use
 
 The Python Package Index
 ========================
@@ -15,12 +30,42 @@ http://pypi.python.org/pypi
 
   - 11,977 packages
   - Ready for Python 3?
-  
+
     - 240
     - Programming Language :: Python :: 3
-  
+
   - Most wanted?
   - Django
+
+Python 2 and Python 3
+=====================
+
+- How do we get on Python 3?
+
+[tandem bicycle]
+
+- 2to3
+- compiles Python 2 code into 3 code
+
+  - with the option to patch
+
+Python 2 and Python 3
+=====================
+
+.. code-block:: python
+
+  extra_setup = {}
+  if sys.version_info >= (3,):
+      extra_setup['use_2to3'] = True
+      extra_setup['use_2to3_fixers'] = ['your.fixers']
+
+  setup(name='mymodule',
+        **extra_setup)
+
+.. code-block:: bash
+
+  python setup.py build
+  ...
 
 Package Development
 ===================
@@ -28,7 +73,7 @@ Package Development
 - requirements
 - dev environment
 - tests
-  
+
   - test requirements
 
 Tox
@@ -39,7 +84,7 @@ http://codespeak.net/tox/
 Automates a multi-version testing environment
 
 .. class:: incremental
-  
+
   - manages each virtualenv
   - manages requirements
   - executes test commands
@@ -54,19 +99,19 @@ Developing Nose
 ===============
 
 .. code-block:: bash
-  
+
   pip install nose
 
 - 27,372 downloads
 - uses coverage (optional)
 
 .. code-block:: bash
-  
-    $ python selftest.py        
+
+    $ python selftest.py
     .................................................................................................................S.................................................................................................................................................................................................SS.....................
     ----------------------------------------------------------------------
     Ran 330 tests in 3.985s
-    
+
     OK (SKIP=3)
 
 Nose In The Wild
@@ -128,7 +173,7 @@ Supporting Python 3
 ===================
 
 .. code-block:: bash
-  
+
   python3 setup.py build_tests
   # adjust path for built tests...
   python3 run_tests.py
@@ -150,7 +195,7 @@ Hudson Bootstrapping
 ====================
 
 .. code-block:: python
-    
+
     # install tox on any slave:
     url = "https://pytox.googlecode.com/hg/toxbootstrap.py"
     os.environ['USETOXDEV']="1"  # use tox dev version until 0.9
