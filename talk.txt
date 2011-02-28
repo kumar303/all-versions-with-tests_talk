@@ -34,8 +34,28 @@ http://pypi.python.org/pypi
     - 240
     - Programming Language :: Python :: 3
 
-  - Most wanted?
-  - Django
+Python 2
+========
+
+.. class:: center
+
+  .. class:: huge
+
+    PYTHON 2
+
+  .. class:: huge
+
+    IS
+
+  .. class:: huge
+
+    DEPRECATED
+
+.. class:: handout
+
+  - 2.7 was the last release, maintenance mode
+  - 3.2 was just released!
+
 
 Python 2 and Python 3
 =====================
@@ -44,119 +64,71 @@ Python 2 and Python 3
 
 [tandem bicycle]
 
-- 2to3
-- compiles Python 2 code into 3 code
+- Using tox
+  
+  - http://codespeak.net/tox/
 
-  - with the option to patch
+Hacking on a package
+====================
 
-Python 2 and Python 3
-=====================
+.. code-block:: bash
+
+  $ virtualenv ~/tmp/fudge
+  ...
+  $ source ~/tmp/fudge/bin/activate
+  (fudge)$ python setup.py develop
+  ...
+  (fudge)$ pip install Nose
+  ...
+  (fudge)$ nosetests
+  ......................................................................................................................................................................................
+  ----------------------------------------------------------------------
+  Ran 182 tests in 0.589s
+
+  OK
+
+.. class:: handout
+  
+  - Great, but all this ran in my default Python
+  - How do you do this for Python3?
+
+Python 3 Syntax
+===============
 
 .. code-block:: python
 
-  extra_setup = {}
-  if sys.version_info >= (3,):
-      extra_setup['use_2to3'] = True
-      extra_setup['use_2to3_fixers'] = ['your.fixers']
+  $ python3
+  >>> import fudge
+  Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "fudge/__init__.py", line 15, in <module>
+      from fudge.patcher import *
+    File "fudge/patcher.py", line 83
+      raise etype, val, tb
+                 ^
+  SyntaxError: invalid syntax
 
-  setup(name='mymodule',
-        **extra_setup)
-
-.. code-block:: bash
-
-  python setup.py build
-  ...
-
-Package Development
-===================
-
-- requirements
-- dev environment
-- tests
-
-  - test requirements
-
-Tox
-===
-
-http://codespeak.net/tox/
-
-Automates a multi-version testing environment
-
-.. class:: incremental
-
-  - manages each virtualenv
-  - manages requirements
-  - executes test commands
-  - customizable in tox.ini
-
-Tox
-===
-
-[demo]
-
-Developing Nose
+Python 3 Syntax
 ===============
 
-.. code-block:: bash
+Python **2**:
 
-  pip install nose
+.. code-block:: python
 
-- 27,372 downloads
-- uses coverage (optional)
+  print u'Hello %s' % name
 
-.. code-block:: bash
+Python **3**:
 
-    $ python selftest.py
-    .................................................................................................................S.................................................................................................................................................................................................SS.....................
-    ----------------------------------------------------------------------
-    Ran 330 tests in 3.985s
+.. code-block:: python
 
-    OK (SKIP=3)
+  print('Hello {0}'.format(name))
 
-Nose In The Wild
-================
+- **2to3** (stdlib)
+- compiles Python 2 code into 3 code
 
-- Python 2.3 (meh)
-- Python 2.4
-- Python 2.5
-- Python 2.6
-- Python 2.7
-- Jython
-- Python 3.0 (why not?)
 
-Nose, The Old Way
-=================
-
-.. code-block:: bash
-
-    $ python2.4 selftest.py
-    $ python2.5 selftest.py
-    $ python2.6 selftest.py
-
-Tox, the new way!
-=================
-
-[results]
-
-tox.ini config
-==============
-
-- the test virtualenvs
-- virtualenv overrides
-- dependencies to install
-- commands to run
-- tox --showconfig
-
-Supporting Python 3
-===================
-
-- Develop in Python 2
-- Build for Python 3
-- tox has Python 3 magic
-
-Supporting Python 3: setup.py
-=============================
+Dual platform setup.py
+======================
 
 .. code-block:: python
 
@@ -164,19 +136,63 @@ Supporting Python 3: setup.py
   if sys.version_info >= (3,):
       kw['use_2to3'] = True
 
-  setup(name='foo',
+  setup(name='YourModule',
         version='0.1,
-        description='...',
         **kw)
-
-Supporting Python 3
-===================
 
 .. code-block:: bash
 
-  python3 setup.py build_tests
-  # adjust path for built tests...
-  python3 run_tests.py
+  $ python setup.py build
+
+(requires distribute)
+
+Supporting Python 3 With Tox
+============================
+
+Tox automates a multi-version testing environment
+
+.. code-block:: bash
+
+  $ tox -e py26,py32
+
+- manages each virtualenv
+- manages requirements
+- executes test commands
+- customizable in tox.ini
+
+tox.ini config
+==============
+
+.. code-block:: ini
+  
+  [tox]
+  envlist=py32,py26
+
+  [testenv]
+  deps=nose
+  commands=nosetests []
+
+tox.ini overrides
+=================
+
+.. code-block:: ini
+
+  [testenv:py32]
+  basepython=python3.2
+  # change into .tox to prevent using 2.x src
+  changedir=.tox
+  deps= nose
+  distribute=True
+  commands=nosetests fudge.tests._py3_suite
+
+
+.. class: handout
+
+  - the test virtualenv
+  - virtualenv overrides
+  - dependencies to install
+  - commands to run
+  - tox --showconfig
 
 Examples
 ========
@@ -185,11 +201,33 @@ Examples
 - building docs w/ sphinx
 - custom test runner
 
+Testing Sphinx Doctests
+=======================
+
+- special env for sphinx
+
+Testing Django Apps
+===================
+
+- test against Django stable
+- test against Django trunk
+
 Using tox in Hudson
 ===================
 
 - $TOXENV with Matrix build
 - [view recipe]
+
+tox.ini Hudson overrides
+========================
+
+.. code-block:: ini
+
+  [hudson:testenv]
+  commands=
+    nosetests 
+      --with-xunit
+      --xunit-file={toxinidir}/nosetests-{envname}.xml
 
 Hudson Bootstrapping
 ====================

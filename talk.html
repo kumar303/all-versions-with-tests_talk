@@ -349,11 +349,24 @@ ul.auto-toc {
 <tbody valign="top">
 <tr><th class="docinfo-name">Author:</th>
 <td>Kumar McMillan</td></tr>
-<tr class="field"><th class="docinfo-name">Venue:</th><td class="field-body">ChiPy</td>
+<tr class="field"><th class="docinfo-name">Venue:</th><td class="field-body">PyCon 2011</td>
 </tr>
 </tbody>
 </table>
 
+</div>
+<div class="slide" id="packages">
+<h1>Packages</h1>
+<ul class="simple">
+<li>We build packages</li>
+<li>We share packages<ul>
+<li>github</li>
+<li>PyPI</li>
+</ul>
+</li>
+<li>Fabric of our community</li>
+</ul>
+<p class="handout">There are many people in this room who have created packages that I use</p>
 </div>
 <div class="slide" id="the-python-package-index">
 <h1>The Python Package Index</h1>
@@ -365,84 +378,132 @@ ul.auto-toc {
 <li>Programming Language :: Python :: 3</li>
 </ul>
 </li>
-<li>Most wanted?</li>
-<li>Django</li>
 </ul>
 </div>
-<div class="slide" id="package-development">
-<h1>Package Development</h1>
+<div class="slide" id="python-2">
+<h1>Python 2</h1>
+<p class="huge center">PYTHON 2</p>
+<p class="huge center">IS</p>
+<p class="huge center">DEPRECATED</p>
+<ul class="handout simple">
+<li>2.7 was the last release, maintenance mode</li>
+<li>3.2 was just released!</li>
+</ul>
+</div>
+<div class="slide" id="python-2-and-python-3">
+<h1>Python 2 and Python 3</h1>
 <ul class="simple">
-<li>requirements</li>
-<li>dev environment</li>
-<li>tests<ul>
-<li>test requirements</li>
+<li>How do we get on Python 3?</li>
+</ul>
+<p>[tandem bicycle]</p>
+<ul class="simple">
+<li>Using tox<ul>
+<li><a class="reference external" href="http://codespeak.net/tox/">http://codespeak.net/tox/</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="slide" id="tox">
-<h1>Tox</h1>
-<p><a class="reference external" href="http://codespeak.net/tox/">http://codespeak.net/tox/</a></p>
-<p>Automates a multi-version testing environment</p>
-<ul class="incremental simple">
+<div class="slide" id="hacking-on-a-package">
+<h1>Hacking on a package</h1>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #19177C">$ </span>virtualenv ~/tmp/fudge
+...
+<span style="color: #19177C">$ </span><span style="color: #008000">source</span> ~/tmp/fudge/bin/activate
+<span style="color: #666666">(</span>fudge<span style="color: #666666">)</span><span style="color: #19177C">$ </span>python setup.py develop
+...
+<span style="color: #666666">(</span>fudge<span style="color: #666666">)</span><span style="color: #19177C">$ </span>pip install Nose
+...
+<span style="color: #666666">(</span>fudge<span style="color: #666666">)</span><span style="color: #19177C">$ </span>nosetests
+......................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 182 tests in 0.589s
+
+OK
+</pre></div>
+<ul class="handout simple">
+<li>Great, but all this ran in my default Python</li>
+<li>How do you do this for Python3?</li>
+</ul>
+</div>
+<div class="slide" id="python-3-syntax">
+<h1>Python 3 Syntax</h1>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="border: 1px solid #FF0000">$</span> python3
+<span style="color: #666666">&gt;&gt;&gt;</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">fudge</span>
+Traceback (most recent call last):
+  File <span style="color: #BA2121">&quot;&lt;stdin&gt;&quot;</span>, line <span style="color: #666666">1</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+  File <span style="color: #BA2121">&quot;fudge/__init__.py&quot;</span>, line <span style="color: #666666">15</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+    <span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">fudge.patcher</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+  File <span style="color: #BA2121">&quot;fudge/patcher.py&quot;</span>, line <span style="color: #666666">83</span>
+    <span style="color: #008000; font-weight: bold">raise</span> etype, val, tb
+               <span style="color: #666666">^</span>
+<span style="color: #D2413A; font-weight: bold">SyntaxError</span>: invalid syntax
+</pre></div>
+</div>
+<div class="slide" id="id1">
+<h1>Python 3 Syntax</h1>
+<p>Python <strong>2</strong>:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">print</span> <span style="color: #BA2121">u&#39;Hello </span><span style="color: #BB6688; font-weight: bold">%s</span><span style="color: #BA2121">&#39;</span> <span style="color: #666666">%</span> name
+</pre></div>
+<p>Python <strong>3</strong>:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;Hello {0}&#39;</span><span style="color: #666666">.</span>format(name))
+</pre></div>
+<ul class="simple">
+<li><strong>2to3</strong> (stdlib)</li>
+<li>compiles Python 2 code into 3 code</li>
+</ul>
+</div>
+<div class="slide" id="dual-platform-setup-py">
+<h1>Dual platform setup.py</h1>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">kw <span style="color: #666666">=</span> {}
+<span style="color: #008000; font-weight: bold">if</span> sys<span style="color: #666666">.</span>version_info <span style="color: #666666">&gt;=</span> (<span style="color: #666666">3</span>,):
+    kw[<span style="color: #BA2121">&#39;use_2to3&#39;</span>] <span style="color: #666666">=</span> <span style="color: #008000">True</span>
+
+setup(name<span style="color: #666666">=</span><span style="color: #BA2121">&#39;YourModule&#39;</span>,
+      version<span style="color: #666666">=</span><span style="color: #BA2121">&#39;0.1,</span>
+      <span style="color: #666666">**</span>kw)
+</pre></div>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #19177C">$ </span>python setup.py build
+</pre></div>
+<p>(requires distribute)</p>
+</div>
+<div class="slide" id="supporting-python-3-with-tox">
+<h1>Supporting Python 3 With Tox</h1>
+<p>Tox automates a multi-version testing environment</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #19177C">$ </span>tox -e py26,py32
+</pre></div>
+<ul class="simple">
 <li>manages each virtualenv</li>
 <li>manages requirements</li>
 <li>executes test commands</li>
 <li>customizable in tox.ini</li>
 </ul>
 </div>
-<div class="slide" id="id1">
-<h1>Tox</h1>
-<p>[demo]</p>
-</div>
-<div class="slide" id="developing-nose">
-<h1>Developing Nose</h1>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">pip install nose
-</pre></div>
-<ul class="simple">
-<li>27,372 downloads</li>
-<li>uses coverage (optional)</li>
-</ul>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #19177C">$ </span>python selftest.py
-.................................................................................................................S.................................................................................................................................................................................................SS.....................
-----------------------------------------------------------------------
-Ran 330 tests in 3.985s
-
-OK <span style="color: #666666">(</span><span style="color: #19177C">SKIP</span><span style="color: #666666">=</span>3<span style="color: #666666">)</span>
-</pre></div>
-</div>
-<div class="slide" id="nose-the-old-way">
-<h1>Nose, The Old Way</h1>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #19177C">$ </span>python2.4 selftest.py
-<span style="color: #19177C">$ </span>python2.5 selftest.py
-<span style="color: #19177C">$ </span>python2.6 selftest.py
-</pre></div>
-</div>
-<div class="slide" id="nose-in-the-wild">
-<h1>Nose In The Wild</h1>
-<ul class="simple">
-<li>Python 2.3 (meh)</li>
-<li>Python 2.4</li>
-<li>Python 2.5</li>
-<li>Python 2.6</li>
-<li>Python 2.7</li>
-<li>Jython</li>
-<li>Python 3.0 (why not?)</li>
-</ul>
-</div>
-<div class="slide" id="id2">
-<h1>Tox</h1>
-<p>[results]</p>
-</div>
 <div class="slide" id="tox-ini-config">
 <h1>tox.ini config</h1>
-<ul class="simple">
-<li>the test virtualenvs</li>
-<li>virtualenv overrides</li>
-<li>dependencies to install</li>
-<li>commands to run</li>
-<li>tox --showconfig</li>
-</ul>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">[tox]</span>
+<span style="color: #7D9029">envlist</span><span style="color: #666666">=</span><span style="color: #BA2121">py32,py26</span>
+
+<span style="color: #008000; font-weight: bold">[testenv]</span>
+<span style="color: #7D9029">deps</span><span style="color: #666666">=</span><span style="color: #BA2121">nose</span>
+<span style="color: #7D9029">commands</span><span style="color: #666666">=</span><span style="color: #BA2121">nosetests []</span>
+</pre></div>
+</div>
+<div class="slide" id="tox-ini-overrides">
+<h1>tox.ini overrides</h1>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">[testenv:py32]</span>
+<span style="color: #7D9029">basepython</span><span style="color: #666666">=</span><span style="color: #BA2121">python3.2</span>
+<span style="color: #408080; font-style: italic"># change into .tox to prevent using 2.x src</span>
+<span style="color: #7D9029">changedir</span><span style="color: #666666">=</span><span style="color: #BA2121">.tox</span>
+<span style="color: #7D9029">deps</span><span style="color: #666666">=</span> <span style="color: #BA2121">nose</span>
+<span style="color: #7D9029">distribute</span><span style="color: #666666">=</span><span style="color: #BA2121">True</span>
+<span style="color: #7D9029">commands</span><span style="color: #666666">=</span><span style="color: #BA2121">nosetests fudge.tests._py3_suite</span>
+</pre></div>
+<!-- class: handout
+
+- the test virtualenv
+- virtualenv overrides
+- dependencies to install
+- commands to run
+- tox - -showconfig -->
 </div>
 <div class="slide" id="supporting-python-3">
 <h1>Supporting Python 3</h1>
@@ -452,19 +513,7 @@ OK <span style="color: #666666">(</span><span style="color: #19177C">SKIP</span>
 <li>tox has Python 3 magic</li>
 </ul>
 </div>
-<div class="slide" id="supporting-python-3-setup-py">
-<h1>Supporting Python 3: setup.py</h1>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">kw <span style="color: #666666">=</span> {}
-<span style="color: #008000; font-weight: bold">if</span> sys<span style="color: #666666">.</span>version_info <span style="color: #666666">&gt;=</span> (<span style="color: #666666">3</span>,):
-    kw[<span style="color: #BA2121">&#39;use_2to3&#39;</span>] <span style="color: #666666">=</span> <span style="color: #008000">True</span>
-
-setup(name<span style="color: #666666">=</span><span style="color: #BA2121">&#39;foo&#39;</span>,
-      version<span style="color: #666666">=</span><span style="color: #BA2121">&#39;0.1,</span>
-      description<span style="color: #666666">=</span><span style="color: #BA2121">&#39;...&#39;</span>,
-      <span style="color: #666666">**</span>kw)
-</pre></div>
-</div>
-<div class="slide" id="id3">
+<div class="slide" id="id2">
 <h1>Supporting Python 3</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">python3 setup.py build_tests
 <span style="color: #408080; font-style: italic"># adjust path for built tests...</span>
@@ -479,12 +528,34 @@ python3 run_tests.py
 <li>custom test runner</li>
 </ul>
 </div>
+<div class="slide" id="testing-sphinx-doctests">
+<h1>Testing Sphinx Doctests</h1>
+<ul class="simple">
+<li>special env for sphinx</li>
+</ul>
+</div>
+<div class="slide" id="testing-django-apps">
+<h1>Testing Django Apps</h1>
+<ul class="simple">
+<li>test against Django stable</li>
+<li>test against Django trunk</li>
+</ul>
+</div>
 <div class="slide" id="using-tox-in-hudson">
 <h1>Using tox in Hudson</h1>
 <ul class="simple">
 <li>$TOXENV with Matrix build</li>
 <li>[view recipe]</li>
 </ul>
+</div>
+<div class="slide" id="tox-ini-hudson-overrides">
+<h1>tox.ini Hudson overrides</h1>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">[hudson:testenv]</span>
+<span style="color: #7D9029">commands</span><span style="color: #666666">=</span> <span style="color: #BA2121">\</span>
+  <span style="border: 1px solid #FF0000">nosetests</span>
+    <span style="border: 1px solid #FF0000">--with-xunit</span>
+    <span style="color: #7D9029">--xunit-file</span><span style="color: #666666">=</span><span style="color: #BA2121">{toxinidir}/nosetests-{envname}.xml</span>
+</pre></div>
 </div>
 <div class="slide" id="hudson-bootstrapping">
 <h1>Hudson Bootstrapping</h1>
