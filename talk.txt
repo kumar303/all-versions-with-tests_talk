@@ -146,6 +146,20 @@ Dual platform setup.py
 
 (requires distribute)
 
+setup.py classifiers for PyPI
+=============================
+
+.. code-block:: python
+
+  setup(name='YourModule',
+        version='0.1,
+        classifiers=[
+            'Programming Language :: Python',
+            'Programming Language :: Python :: 3'
+        ],
+        **kw
+  )
+
 Supporting Python 3 With Tox
 ============================
 
