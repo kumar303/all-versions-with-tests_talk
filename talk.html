@@ -351,6 +351,8 @@ ul.auto-toc {
 <td>Kumar McMillan</td></tr>
 <tr class="field"><th class="docinfo-name">Venue:</th><td class="field-body">PyCon 2011</td>
 </tr>
+<tr class="field"><th class="docinfo-name">Slides:</th><td class="field-body"><a class="reference external" href="http://farmdev.com/talks/tox/">http://farmdev.com/talks/tox/</a></td>
+</tr>
 </tbody>
 </table>
 
@@ -365,12 +367,20 @@ ul.auto-toc {
 </ul>
 </li>
 <li>Fabric of our community</li>
+<li>We are like hunter gatherers</li>
 </ul>
-<p class="handout">There are many people in this room who have created packages that I use</p>
+<ul class="handout simple">
+<li>Humans have been on earth for 2.5 million years</li>
+<li>For 90% of that time we lived in egalitarian hunter gatherer
+societies where all resources were shared.  There was joint ownership
+of everything.</li>
+</ul>
 </div>
 <div class="slide" id="the-python-package-index">
 <h1>The Python Package Index</h1>
 <p><a class="reference external" href="http://pypi.python.org/pypi">http://pypi.python.org/pypi</a></p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">pip install numpy
+</pre></div>
 <ul class="incremental simple">
 <li>13,560 packages</li>
 <li>Ready for Python 3?</li>
@@ -445,12 +455,12 @@ Traceback (most recent call last):
     kw[<span style="color: #BA2121">&#39;use_2to3&#39;</span>] <span style="color: #666666">=</span> <span style="color: #008000">True</span>
 
 setup(name<span style="color: #666666">=</span><span style="color: #BA2121">&#39;YourModule&#39;</span>,
-      version<span style="color: #666666">=</span><span style="color: #BA2121">&#39;0.1,</span>
+      version<span style="color: #666666">=</span><span style="color: #BA2121">&#39;0.1&#39;</span>,
       <span style="color: #666666">**</span>kw)
 </pre></div>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #19177C">$ </span>python setup.py build
 </pre></div>
-<p>(requires distribute)</p>
+<p>(requires <a class="reference external" href="http://pypi.python.org/pypi/distribute">distribute</a>)</p>
 </div>
 <div class="slide" id="single-source-for-2-and-3">
 <h1>Single Source for 2 and 3</h1>
@@ -467,7 +477,7 @@ setup(name<span style="color: #666666">=</span><span style="color: #BA2121">&#39
 <h1>setup.py classifiers for PyPI</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">setup(
   name<span style="color: #666666">=</span><span style="color: #BA2121">&#39;YourModule&#39;</span>,
-  version<span style="color: #666666">=</span><span style="color: #BA2121">&#39;0.1,</span>
+  version<span style="color: #666666">=</span><span style="color: #BA2121">&#39;0.1&#39;</span>,
   classifiers<span style="color: #666666">=</span>[
     <span style="color: #BA2121">&#39;Programming Language :: Python&#39;</span>,
     <span style="color: #BA2121">&#39;Programming Language :: Python :: 3&#39;</span>
@@ -478,7 +488,7 @@ setup(name<span style="color: #666666">=</span><span style="color: #BA2121">&#39
 </div>
 <div class="slide" id="supporting-python-3-with-tox">
 <h1>Supporting Python 3 With Tox</h1>
-<p>tox automates all of this!</p>
+<p>tox automates your multi-version testing environment</p>
 <ul class="simple">
 <li>virtualenv per interpreter</li>
 <li>installs your package</li>
@@ -501,8 +511,12 @@ setup(name<span style="color: #666666">=</span><span style="color: #BA2121">&#39
 <span style="color: #BA2121">  nosetests []</span>
 </pre></div>
 </div>
-<div class="slide" id="distributed-tests">
-<h1>Distributed tests</h1>
+<div class="slide" id="testing-python-3-w-distributed-tests">
+<h1>Testing Python 3 w/ distributed tests</h1>
+<pre class="literal-block">
+fudge/__init__.py
+fudge/tests/__init__.py
+</pre>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">[testenv]</span>
 <span style="color: #7D9029">deps</span><span style="color: #666666">=</span><span style="color: #BA2121">nose</span>
 <span style="color: #7D9029">commands</span><span style="color: #666666">=</span><span style="color: #BA2121">nosetests []</span>
@@ -539,6 +553,7 @@ functional_tests/
 <span style="color: #BA2121">    make doctest</span>
 <span style="color: #BA2121">    make html</span>
 </pre></div>
+<p>[demo]</p>
 </div>
 <div class="slide" id="test-against-django-trunk">
 <h1>Test against Django trunk</h1>
@@ -560,7 +575,7 @@ functional_tests/
 <li>pypy</li>
 <li>docs (Sphinx)</li>
 </ul>
-<p>(must be installed)</p>
+<p>(interpreters must be installed and in $PATH)</p>
 </div>
 <div class="slide" id="using-tox-in-ci">
 <h1>Using tox in CI</h1>
@@ -571,18 +586,18 @@ functional_tests/
 <h1>Jenkins Matrix Build</h1>
 <img alt="images/jenkins-matrix2.png" src="images/jenkins-matrix2.png" />
 <pre class="literal-block">
-tox -e py26
+$TOXENV=py26
 </pre>
 <pre class="literal-block">
-$TOXENV=py26
+tox -e py26
 </pre>
 </div>
 <div class="slide" id="id2">
 <h1>Jenkins Matrix Build</h1>
 <img alt="images/jenkins-matrix3.png" src="images/jenkins-matrix3.png" />
 </div>
-<div class="slide" id="hudson-bootstrapping">
-<h1>Hudson Bootstrapping</h1>
+<div class="slide" id="jenkins-bootstrapping">
+<h1>Jenkins Bootstrapping</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># install tox on any slave:</span>
 url <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;https://pytox.googlecode.com/hg/toxbootstrap.py&quot;</span>
 d <span style="color: #666666">=</span> <span style="color: #008000">dict</span>(__file__<span style="color: #666666">=</span><span style="color: #BA2121">&#39;toxbootstrap.py&#39;</span>)
@@ -593,8 +608,8 @@ d[<span style="color: #BA2121">&#39;cmdline&#39;</span>]([<span style="color: #B
 <div class="slide" id="summary">
 <h1>Summary</h1>
 <ul class="simple">
+<li>support more Pythons!</li>
 <li>toxify with tox.ini</li>
-<li>support more Pythons</li>
 </ul>
 <p>Python 3:</p>
 <ul class="simple">

@@ -17,15 +17,24 @@ Packages
   - PyPI
 
 - Fabric of our community
+- We are like hunter gatherers
 
 .. class:: handout
 
-  There are many people in this room who have created packages that I use
+  - Humans have been on earth for 2.5 million years
+  - For 90% of that time we lived in egalitarian hunter gatherer
+    societies where all resources were shared.  There was joint ownership
+    of everything.
 
 The Python Package Index
 ========================
 
 http://pypi.python.org/pypi
+
+.. code-block:: bash
+
+  pip install numpy
+
 
 .. class:: incremental
 
@@ -131,14 +140,16 @@ Dual platform setup.py
       kw['use_2to3'] = True
 
   setup(name='YourModule',
-        version='0.1,
+        version='0.1',
         **kw)
 
 .. code-block:: bash
 
   $ python setup.py build
 
-(requires distribute)
+(requires `distribute`_)
+
+.. _`distribute`: http://pypi.python.org/pypi/distribute
 
 Single Source for 2 and 3
 =========================
@@ -156,7 +167,7 @@ setup.py classifiers for PyPI
 
   setup(
     name='YourModule',
-    version='0.1,
+    version='0.1',
     classifiers=[
       'Programming Language :: Python',
       'Programming Language :: Python :: 3'
@@ -167,7 +178,7 @@ setup.py classifiers for PyPI
 Supporting Python 3 With Tox
 ============================
 
-tox automates all of this!
+tox automates your multi-version testing environment
 
 - virtualenv per interpreter
 - installs your package
@@ -194,8 +205,13 @@ tox.ini config
   commands=
     nosetests []
 
-Distributed tests
-=================
+Testing Python 3 w/ distributed tests
+=====================================
+
+::
+
+  fudge/__init__.py
+  fudge/tests/__init__.py
 
 .. code-block:: ini
 
@@ -241,6 +257,8 @@ Sphinx doctests
       make doctest
       make html
 
+[demo]
+
 Test against Django trunk
 =========================
 
@@ -263,7 +281,7 @@ Cross platform support
 - pypy
 - docs (Sphinx)
 
-(must be installed)
+(interpreters must be installed and in $PATH)
 
 Using tox in CI
 ===============
@@ -279,19 +297,19 @@ Jenkins Matrix Build
 
 ::
 
-  tox -e py26
+  $TOXENV=py26
 
 ::
 
-  $TOXENV=py26
+  tox -e py26
 
 Jenkins Matrix Build
 ====================
 
 .. image:: images/jenkins-matrix3.png
 
-Hudson Bootstrapping
-====================
+Jenkins Bootstrapping
+=====================
 
 .. code-block:: python
 
@@ -304,8 +322,8 @@ Hudson Bootstrapping
 Summary
 =======
 
+- support more Pythons!
 - toxify with tox.ini
-- support more Pythons
 
 Python 3:
 
