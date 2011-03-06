@@ -5,6 +5,7 @@ Supporting All Versions of Python All The Time With Tox
 
 :Author: Kumar McMillan
 :Venue: PyCon 2011
+:Slides: http://farmdev.com/talks/tox/
 
 Packages
 ========
@@ -28,11 +29,13 @@ http://pypi.python.org/pypi
 
 .. class:: incremental
 
-  - 11,977 packages
+  - 13,560 packages
   - Ready for Python 3?
+  - 374
 
-    - 240
-    - Programming Language :: Python :: 3
+.. class:: handout
+
+  - less than 4%
 
 Python 2
 ========
@@ -57,29 +60,22 @@ Python 2
   - 3.2 was just released!
 
 
-Python 2 and Python 3
-=====================
+How do we get on Python 3?
+==========================
 
-- How do we get on Python 3?
+Developing in tandem with tox: http://codespeak.net/tox/
 
-[tandem bicycle]
+.. image:: images/tandem.jpg
 
-- Using tox
-  
-  - http://codespeak.net/tox/
-
-Hacking on a package
+Developing a package
 ====================
 
 .. code-block:: bash
 
   $ virtualenv ~/tmp/fudge
-  ...
   $ source ~/tmp/fudge/bin/activate
   (fudge)$ python setup.py develop
-  ...
   (fudge)$ pip install Nose
-  ...
   (fudge)$ nosetests
   ......................................................................................................................................................................................
   ----------------------------------------------------------------------
@@ -88,7 +84,7 @@ Hacking on a package
   OK
 
 .. class:: handout
-  
+
   - Great, but all this ran in my default Python
   - How do you do this for Python3?
 
@@ -97,12 +93,10 @@ Python 3 Syntax
 
 .. code-block:: python
 
-  $ python3
+  python3
   >>> import fudge
   Traceback (most recent call last):
-    File "<stdin>", line 1, in <module>
-    File "fudge/__init__.py", line 15, in <module>
-      from fudge.patcher import *
+    ...
     File "fudge/patcher.py", line 83
       raise etype, val, tb
                  ^
@@ -124,7 +118,7 @@ Python **3**:
   print('Hello {0}'.format(name))
 
 - **2to3** (stdlib)
-- compiles Python 2 code into 3 code
+- converts most syntax automatically
 
 
 Dual platform setup.py
@@ -146,102 +140,155 @@ Dual platform setup.py
 
 (requires distribute)
 
+Single Source for 2 and 3
+=========================
+
+- requires more work and some hacks
+- Example: mock
+
+  - http://www.voidspace.org.uk/python/articles/porting-mock-to-python-3.shtml
+  - supports 2.4 - 3.2
+
 setup.py classifiers for PyPI
 =============================
 
 .. code-block:: python
 
-  setup(name='YourModule',
-        version='0.1,
-        classifiers=[
-            'Programming Language :: Python',
-            'Programming Language :: Python :: 3'
-        ],
-        **kw
+  setup(
+    name='YourModule',
+    version='0.1,
+    classifiers=[
+      'Programming Language :: Python',
+      'Programming Language :: Python :: 3'
+    ],
+    **kw
   )
 
 Supporting Python 3 With Tox
 ============================
 
-Tox automates a multi-version testing environment
+tox automates all of this!
+
+- virtualenv per interpreter
+- installs your package
+- pip / easy_install requirements
+- runs tests
 
 .. code-block:: bash
 
+  $ cd fudge
   $ tox -e py26,py32
 
-- manages each virtualenv
-- manages requirements
-- executes test commands
-- customizable in tox.ini
+[demo]
 
 tox.ini config
 ==============
 
 .. code-block:: ini
-  
+
   [tox]
-  envlist=py32,py26
+  envlist=py26,py32
+
+  [testenv]
+  deps=nose
+  commands=
+    nosetests []
+
+Distributed tests
+=================
+
+.. code-block:: ini
 
   [testenv]
   deps=nose
   commands=nosetests []
 
-tox.ini overrides
-=================
+  [testenv:py32]
+  commands=
+    nosetests fudge.tests.all_tests
+
+Non-distributed tests
+=====================
+
+::
+
+  nose/__init__.py
+  setup.py
+  unit_tests/
+  functional_tests/
 
 .. code-block:: ini
 
   [testenv:py32]
-  basepython=python3.2
-  # change into .tox to prevent using 2.x src
-  changedir=.tox
-  deps= nose
-  distribute=True
-  commands=nosetests fudge.tests._py3_suite
+  commands=
+    {envpython} setup.py build_tests
+    cd build/tests
+    {envpython} runtests.py []
 
+https://bitbucket.org/jpellerin/nose
 
-.. class: handout
-
-  - the test virtualenv
-  - virtualenv overrides
-  - dependencies to install
-  - commands to run
-  - tox --showconfig
-
-Examples
-========
-
-- nosetests, py.test
-- building docs w/ sphinx
-- custom test runner
-
-Testing Sphinx Doctests
-=======================
-
-- special env for sphinx
-
-Testing Django Apps
-===================
-
-- test against Django stable
-- test against Django trunk
-
-Using tox in Hudson
-===================
-
-- $TOXENV with Matrix build
-- [view recipe]
-
-tox.ini Hudson overrides
-========================
+Sphinx doctests
+===============
 
 .. code-block:: ini
 
-  [hudson:testenv]
+  [testenv:docs]
+  changedir=docs
+  deps=sphinx
+       nose
   commands=
-    nosetests 
-      --with-xunit
-      --xunit-file={toxinidir}/nosetests-{envname}.xml
+      make clean
+      make doctest
+      make html
+
+Test against Django trunk
+=========================
+
+.. code-block:: ini
+
+  [testenv]
+  deps= django
+  commands=python manage.py test
+
+  [testenv:trunk]
+  basepython=python2.6
+  deps=
+    svn+http://code.djangoproject.com/svn/django/trunk/#egg=django
+
+Cross platform support
+======================
+
+- py24 ... py32
+- jython
+- pypy
+- docs (Sphinx)
+
+(must be installed)
+
+Using tox in CI
+===============
+
+Jenkins Matrix Build:
+
+.. image:: images/jenkins-matrix1.png
+
+Jenkins Matrix Build
+====================
+
+.. image:: images/jenkins-matrix2.png
+
+::
+
+  tox -e py26
+
+::
+
+  $TOXENV=py26
+
+Jenkins Matrix Build
+====================
+
+.. image:: images/jenkins-matrix3.png
 
 Hudson Bootstrapping
 ====================
@@ -250,7 +297,29 @@ Hudson Bootstrapping
 
     # install tox on any slave:
     url = "https://pytox.googlecode.com/hg/toxbootstrap.py"
-    os.environ['USETOXDEV']="1"  # use tox dev version until 0.9
     d = dict(__file__='toxbootstrap.py')
     exec urllib.urlopen(url).read() in d
     d['cmdline'](['--recreate'])
+
+Summary
+=======
+
+- toxify with tox.ini
+- support more Pythons
+
+Python 3:
+
+- single source
+- convert with 2to3
+
+  - run tests by import path
+  - build tests separately
+
+Questions?
+==========
+
+Thank You
+
+- slides: http://farmdev.com/talks/tox/
+- me: @kumar303 http://farmdev.com/
+- thanks to Holger Krekel for tox!
