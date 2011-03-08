@@ -92,10 +92,62 @@ Developing a package
 
   OK
 
-.. class:: handout
+Now ... with tox
+================
 
-  - Great, but all this ran in my default Python
-  - How do you do this for Python3?
+tox lets you develop in multiple versions of Python
+
+- virtualenv per interpreter
+- installs your package
+- pip / easy_install requirements
+- runs tests
+
+.. code-block:: bash
+
+  $ cd fudge
+  $ tox -e py26,py32
+
+[demo]
+
+tox.ini config
+==============
+
+.. code-block:: ini
+
+  [tox]
+  envlist=py26,py32
+
+  [testenv]
+  deps=nose
+  commands=
+    nosetests []
+
+Test runner args
+================
+
+.. code-block:: ini
+
+  [tox]
+  envlist=py26,py32
+
+  [testenv]
+  deps=nose
+  commands=
+    # tox -- --with-nicedots --stop
+    nosetests []
+
+Any test command
+================
+
+.. code-block:: ini
+
+  [tox]
+  envlist=py26,py32
+
+  [testenv]
+  deps=pytest
+  commands=
+    py.test []
 
 Python 3 Syntax
 ===============
@@ -151,15 +203,6 @@ Dual platform setup.py
 
 .. _`distribute`: http://pypi.python.org/pypi/distribute
 
-Single Source for 2 and 3
-=========================
-
-- requires more work and some hacks
-- Example: mock
-
-  - http://www.voidspace.org.uk/python/articles/porting-mock-to-python-3.shtml
-  - supports 2.4 - 3.2
-
 setup.py classifiers for PyPI
 =============================
 
@@ -169,44 +212,39 @@ setup.py classifiers for PyPI
     name='YourModule',
     version='0.1',
     classifiers=[
-      'Programming Language :: Python',
       'Programming Language :: Python :: 3'
     ],
     **kw
   )
 
-Supporting Python 3 With Tox
-============================
+Single Source for 2 and 3
+=========================
 
-tox automates your multi-version testing environment
+- requires more work and some hacks
+- Example: mock
 
-- virtualenv per interpreter
-- installs your package
-- pip / easy_install requirements
-- runs tests
+  - http://www.voidspace.org.uk/python/articles/porting-mock-to-python-3.shtml
+  - supports 2.4 - 3.2
 
-.. code-block:: bash
+Python 3 + tox: single source
+=============================
 
-  $ cd fudge
-  $ tox -e py26,py32
+.. image:: images/py3-single-source.png
 
-[demo]
+2to3: distributed tests
+=======================
 
-tox.ini config
-==============
+.. image:: images/py3-distributed.png
 
-.. code-block:: ini
 
-  [tox]
-  envlist=py26,py32
+2to3: non-distributed tests
+===========================
 
-  [testenv]
-  deps=nose
-  commands=
-    nosetests []
+.. image:: images/py3-non-distributed.png
 
-Testing Python 3 w/ distributed tests
-=====================================
+
+2to3 w/ distributed tests
+=========================
 
 ::
 
@@ -223,8 +261,8 @@ Testing Python 3 w/ distributed tests
   commands=
     nosetests fudge.tests.all_tests
 
-Non-distributed tests
-=====================
+2to3 w/ non-distributed tests
+=============================
 
 ::
 
@@ -273,8 +311,8 @@ Test against Django trunk
   deps=
     svn+http://code.djangoproject.com/svn/django/trunk/#egg=django
 
-Cross platform support
-======================
+Built-in tox environments
+=========================
 
 - py24 ... py32
 - jython
@@ -335,6 +373,8 @@ Python 3:
 
 Questions?
 ==========
+
+tox: http://codespeak.net/tox/
 
 Thank You
 
