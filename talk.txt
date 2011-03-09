@@ -7,8 +7,8 @@ Supporting All Versions of Python All The Time With Tox
 :Venue: PyCon 2011
 :Slides: http://farmdev.com/talks/tox/
 
-Packages
-========
+We Are Python Developers
+========================
 
 - We build packages
 - We share packages
@@ -321,6 +321,26 @@ Built-in tox environments
 
 (interpreters must be installed and in $PATH)
 
+All Environments
+================
+
+.. class:: center
+
+  .. class:: huge
+
+    LET'S
+
+  .. class:: huge
+
+    TEST
+
+  .. class:: huge
+
+    EVERYTHING
+
+  [demo]
+
+
 Using tox in CI
 ===============
 
@@ -346,30 +366,66 @@ Jenkins Matrix Build
 
 .. image:: images/jenkins-matrix3.png
 
-Jenkins Bootstrapping
-=====================
+Bootstrapping tox
+=================
+
+- Must be installed locally (virtualenv?)
+- Zero-configuration Jenkins slave:
 
 .. code-block:: python
 
-    # install tox on any slave:
+    # Python code for builder to execute:
     url = "https://pytox.googlecode.com/hg/toxbootstrap.py"
     d = dict(__file__='toxbootstrap.py')
     exec urllib.urlopen(url).read() in d
     d['cmdline'](['--recreate'])
 
-Summary
-=======
+Variables
+=========
 
-- support more Pythons!
-- toxify with tox.ini
+- global
 
-Python 3:
+  - {toxinidir}
+  - {toxworkdir}
+  - {homedir}
+  - ...
+
+- test environment
+
+  - {envname}
+  - {envpython}
+  - {envdir}
+  - ...
+
+Custom PyPI
+===========
+
+.. code-block:: ini
+
+  [tox]
+  indexserver =
+      DEV = http://mypypi.org
+
+  [testenv]
+  deps =
+      docutils
+      :DEV:yourmodule
+
+
+Now you know...
+===============
+
+- how to support more Pythons!
+- how to toxify with tox.ini
+
+How to support Python 3:
 
 - single source
 - convert with 2to3
 
   - run tests by import path
   - build tests separately
+
 
 Questions?
 ==========

@@ -607,6 +607,13 @@ functional_tests/
 </ul>
 <p>(interpreters must be installed and in $PATH)</p>
 </div>
+<div class="slide" id="all-environments">
+<h1>All Environments</h1>
+<p class="huge center">LET'S</p>
+<p class="huge center">TEST</p>
+<p class="huge center">EVERYTHING</p>
+<p class="center">[demo]</p>
+</div>
 <div class="slide" id="using-tox-in-ci">
 <h1>Using tox in CI</h1>
 <p>Jenkins Matrix Build:</p>
@@ -626,22 +633,57 @@ tox -e py26
 <h1>Jenkins Matrix Build</h1>
 <img alt="images/jenkins-matrix3.png" src="images/jenkins-matrix3.png" />
 </div>
-<div class="slide" id="jenkins-bootstrapping">
-<h1>Jenkins Bootstrapping</h1>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># install tox on any slave:</span>
+<div class="slide" id="bootstrapping-tox">
+<h1>Bootstrapping tox</h1>
+<ul class="simple">
+<li>Must be installed locally (virtualenv?)</li>
+<li>Zero-configuration Jenkins slave:</li>
+</ul>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># Python code for builder to execute:</span>
 url <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;https://pytox.googlecode.com/hg/toxbootstrap.py&quot;</span>
 d <span style="color: #666666">=</span> <span style="color: #008000">dict</span>(__file__<span style="color: #666666">=</span><span style="color: #BA2121">&#39;toxbootstrap.py&#39;</span>)
 <span style="color: #008000; font-weight: bold">exec</span> urllib<span style="color: #666666">.</span>urlopen(url)<span style="color: #666666">.</span>read() <span style="color: #AA22FF; font-weight: bold">in</span> d
 d[<span style="color: #BA2121">&#39;cmdline&#39;</span>]([<span style="color: #BA2121">&#39;--recreate&#39;</span>])
 </pre></div>
 </div>
-<div class="slide" id="summary">
-<h1>Summary</h1>
+<div class="slide" id="variables">
+<h1>Variables</h1>
 <ul class="simple">
-<li>support more Pythons!</li>
-<li>toxify with tox.ini</li>
+<li>global<ul>
+<li>{toxinidir}</li>
+<li>{toxworkdir}</li>
+<li>{homedir}</li>
+<li>...</li>
 </ul>
-<p>Python 3:</p>
+</li>
+<li>test environment<ul>
+<li>{envname}</li>
+<li>{envpython}</li>
+<li>{envdir}</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="slide" id="custom-pypi">
+<h1>Custom PyPI</h1>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">[tox]</span>
+<span style="color: #7D9029">indexserver</span> <span style="color: #666666">=</span><span style="color: #BA2121"></span>
+<span style="color: #BA2121">    DEV = http://mypypi.org</span>
+
+<span style="color: #008000; font-weight: bold">[testenv]</span>
+<span style="color: #7D9029">deps</span> <span style="color: #666666">=</span><span style="color: #BA2121"></span>
+<span style="color: #BA2121">    docutils</span>
+<span style="color: #BA2121">    :DEV:yourmodule</span>
+</pre></div>
+</div>
+<div class="slide" id="now-you-know">
+<h1>Now you know...</h1>
+<ul class="simple">
+<li>how to support more Pythons!</li>
+<li>how to toxify with tox.ini</li>
+</ul>
+<p>How to support Python 3:</p>
 <ul class="simple">
 <li>single source</li>
 <li>convert with 2to3<ul>
