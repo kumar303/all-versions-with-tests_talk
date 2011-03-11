@@ -382,7 +382,7 @@ of everything.</li>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%">pip install numpy
 </pre></div>
 <ul class="incremental simple">
-<li>13,560 packages</li>
+<li>13,560 packages on PyPI</li>
 <li>Ready for Python 3?</li>
 <li>374</li>
 </ul>
@@ -537,10 +537,6 @@ setup(name<span style="color: #666666">=</span><span style="color: #BA2121">&#39
 <h1>2to3: distributed tests</h1>
 <img alt="images/py3-distributed.png" src="images/py3-distributed.png" />
 </div>
-<div class="slide" id="to3-non-distributed-tests">
-<h1>2to3: non-distributed tests</h1>
-<img alt="images/py3-non-distributed.png" src="images/py3-non-distributed.png" />
-</div>
 <div class="slide" id="to3-w-distributed-tests">
 <h1>2to3 w/ distributed tests</h1>
 <pre class="literal-block">
@@ -556,11 +552,14 @@ fudge/tests/__init__.py
 <span style="color: #BA2121">  nosetests fudge.tests.all_tests</span>
 </pre></div>
 </div>
+<div class="slide" id="to3-non-distributed-tests">
+<h1>2to3: non-distributed tests</h1>
+<img alt="images/py3-non-distributed.png" src="images/py3-non-distributed.png" />
+</div>
 <div class="slide" id="to3-w-non-distributed-tests">
 <h1>2to3 w/ non-distributed tests</h1>
 <pre class="literal-block">
 nose/__init__.py
-setup.py
 unit_tests/
 functional_tests/
 </pre>
@@ -588,13 +587,13 @@ functional_tests/
 <div class="slide" id="test-against-django-trunk">
 <h1>Test against Django trunk</h1>
 <div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">[testenv]</span>
-<span style="color: #7D9029">deps</span><span style="color: #666666">=</span> <span style="color: #BA2121">django</span>
+<span style="color: #7D9029">deps</span><span style="color: #666666">=</span><span style="color: #BA2121">django</span>
 <span style="color: #7D9029">commands</span><span style="color: #666666">=</span><span style="color: #BA2121">python manage.py test</span>
 
 <span style="color: #008000; font-weight: bold">[testenv:trunk]</span>
 <span style="color: #7D9029">basepython</span><span style="color: #666666">=</span><span style="color: #BA2121">python2.6</span>
 <span style="color: #7D9029">deps</span><span style="color: #666666">=</span><span style="color: #BA2121"></span>
-<span style="color: #BA2121">  svn+http://code.djangoproject.com/svn/django/trunk/#egg=django</span>
+<span style="color: #BA2121">  svn+http://.../svn/django/trunk/#egg=django</span>
 </pre></div>
 </div>
 <div class="slide" id="built-in-tox-environments">
@@ -701,6 +700,10 @@ d[<span style="color: #BA2121">&#39;cmdline&#39;</span>]([<span style="color: #B
 <li>slides: <a class="reference external" href="http://farmdev.com/talks/tox/">http://farmdev.com/talks/tox/</a></li>
 <li>me: &#64;kumar303 <a class="reference external" href="http://farmdev.com/">http://farmdev.com/</a></li>
 <li>thanks to Holger Krekel for tox!</li>
+<li>Mozilla is hiring<ul>
+<li>we love open source :)</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

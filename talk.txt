@@ -38,7 +38,7 @@ http://pypi.python.org/pypi
 
 .. class:: incremental
 
-  - 13,560 packages
+  - 13,560 packages on PyPI
   - Ready for Python 3?
   - 374
 
@@ -237,12 +237,6 @@ Python 3 + tox: single source
 .. image:: images/py3-distributed.png
 
 
-2to3: non-distributed tests
-===========================
-
-.. image:: images/py3-non-distributed.png
-
-
 2to3 w/ distributed tests
 =========================
 
@@ -261,13 +255,18 @@ Python 3 + tox: single source
   commands=
     nosetests fudge.tests.all_tests
 
+
+2to3: non-distributed tests
+===========================
+
+.. image:: images/py3-non-distributed.png
+
 2to3 w/ non-distributed tests
 =============================
 
 ::
 
   nose/__init__.py
-  setup.py
   unit_tests/
   functional_tests/
 
@@ -303,13 +302,13 @@ Test against Django trunk
 .. code-block:: ini
 
   [testenv]
-  deps= django
+  deps=django
   commands=python manage.py test
 
   [testenv:trunk]
   basepython=python2.6
   deps=
-    svn+http://code.djangoproject.com/svn/django/trunk/#egg=django
+    svn+http://.../svn/django/trunk/#egg=django
 
 Built-in tox environments
 =========================
@@ -437,3 +436,6 @@ Thank You
 - slides: http://farmdev.com/talks/tox/
 - me: @kumar303 http://farmdev.com/
 - thanks to Holger Krekel for tox!
+- Mozilla is hiring
+
+  - we love open source :)
